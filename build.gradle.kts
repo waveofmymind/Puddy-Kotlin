@@ -3,9 +3,22 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "3.0.5"
     id("io.spring.dependency-management") version "1.1.0"
-    kotlin("jvm") version "1.7.22"
+    kotlin("jvm") version "1.8.20"
     kotlin("plugin.spring") version "1.7.22"
     kotlin("plugin.jpa") version "1.7.22"
+    kotlin("kapt") version "1.7.10"
+
+}
+
+
+subprojects {
+    apply(plugin = "kotlin-kapt")
+
+    dependencies {
+        implementation("org.mapstruct:mapstruct:1.5.2.Final")
+        kapt("org.mapstruct:mapstruct-processor:1.5.2.Final")
+        kaptTest("org.mapstruct:mapstruct-processor:1.5.2.Final")
+    }
 }
 
 group = "com.team"
@@ -37,6 +50,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
 
+    implementation("org.mapstruct:mapstruct:1.5.2.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.5.2.Final")
+    kaptTest("org.mapstruct:mapstruct-processor:1.5.2.Final")
+
     //token
     implementation ("com.auth0:java-jwt:3.18.3")
     implementation ("io.jsonwebtoken:jjwt:0.9.1")
@@ -53,3 +70,6 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+
+
