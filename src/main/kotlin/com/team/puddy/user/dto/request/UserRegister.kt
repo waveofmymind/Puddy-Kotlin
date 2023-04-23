@@ -1,6 +1,8 @@
 package com.team.puddy.user.dto.request
 
 import com.team.puddy.user.domain.User
+import com.team.puddy.user.domain.UserRole
+import org.springframework.security.crypto.password.PasswordEncoder
 import kotlin.random.Random
 
 data class UserRegister(
@@ -9,14 +11,15 @@ data class UserRegister(
     val password: String,
     val username: String,
     val isNotificated: Boolean,
-) {
-    fun toEntity(): User = User(
-            account = this.account,
-            email = this.email,
-            password = this.password,
-            username = this.username,
-            nickname = "퍼디" + Random.nextInt(10000, 99999),
-            isNotificated = this.isNotificated
-        )
+)
 
-}
+fun UserRegister.toEntity(password:String): User = User(
+    account = this.account,
+    email = this.email,
+    password = password,
+    username = this.username,
+
+    nickname = "퍼디" + Random.nextInt(10000, 99999),
+    role = UserRole.USER.role,
+    isNotificated = this.isNotificated
+)

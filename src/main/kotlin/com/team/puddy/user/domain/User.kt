@@ -1,14 +1,14 @@
 package com.team.puddy.user.domain
 
+import com.team.puddy.answer.domain.Answer
 import com.team.puddy.global.config.jpa.BaseEntity
 import com.team.puddy.question.domain.Question
 import jakarta.persistence.*
-import lombok.AccessLevel
-import lombok.NoArgsConstructor
+import java.util.HashSet
+
 
 @Entity
 @Table(name = "\"user\"")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +27,17 @@ class User(
 
     val username: String,
 
+    var role: String,
+
     var isNotificated: Boolean = false,
 
+    ) : BaseEntity() {
+
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var questionList: List<Question> = listOf()
-) : BaseEntity() {
+    var questionList: MutableList<Question> = mutableListOf()
+
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var answerList: MutableList<Answer> = mutableListOf()
 
 }
+
