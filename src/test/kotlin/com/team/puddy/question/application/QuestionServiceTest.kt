@@ -1,11 +1,9 @@
-package com.team.puddy.question.service
+package com.team.puddy.question.application
 
 import com.team.puddy.global.error.ErrorCode
 import com.team.puddy.global.error.exception.NotFoundException
 import com.team.puddy.question.domain.QuestionRepository
 import com.team.puddy.question.domain.questionRegister
-import com.team.puddy.question.dto.request.QuestionRegister
-import com.team.puddy.user.domain.User
 import com.team.puddy.user.domain.user
 import com.team.puddy.user.infrastructure.UserRepository
 import io.kotest.assertions.throwables.shouldThrow
@@ -39,7 +37,7 @@ class QuestionServiceTest : BehaviorSpec({
             }
         }
 
-        When("유저가 없는 유저일 경우") {
+        When("없는 유저일 경우") {
             every { userRepository.findByIdOrNull(userId) } throws NotFoundException(ErrorCode.USER_NOT_FOUND)
 
             Then("Not Found 예외가 발생한다.") {
