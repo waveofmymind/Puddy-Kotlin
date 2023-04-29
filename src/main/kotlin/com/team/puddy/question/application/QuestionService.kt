@@ -1,4 +1,4 @@
-package com.team.puddy.question.service
+package com.team.puddy.question.application
 
 import com.team.puddy.global.error.ErrorCode
 import com.team.puddy.global.error.exception.NotFoundException

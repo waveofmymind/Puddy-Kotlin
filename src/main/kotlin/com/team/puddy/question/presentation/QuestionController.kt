@@ -4,9 +4,8 @@ import com.team.puddy.global.common.api.Response
 import com.team.puddy.global.security.auth.JwtUserDetails
 import com.team.puddy.question.dto.request.QuestionRegister
 import com.team.puddy.question.dto.response.QuestionResponse
-import com.team.puddy.question.service.QuestionService
+import com.team.puddy.question.application.QuestionService
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
