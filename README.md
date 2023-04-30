@@ -21,11 +21,13 @@
 
 ### BackEnd
 
-- Java 17
-- Spring Boot 2.7.9
+- Kotlin 1.8.20
+- Spring Boot 3.0.6
+- Spring WebFlux
 - Spring Security
-- Gradle
+- Gradle - Kotlin
 - JPA
+- R2DBC
 - Querydsl
 - S3
 - AWS RDBMS
