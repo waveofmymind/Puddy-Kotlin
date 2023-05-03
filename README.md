@@ -26,14 +26,15 @@
 - Spring WebFlux
 - Spring Security
 - Gradle - Kotlin
-- JPA
-- R2DBC
+- Spring Data JPA
+- Spring Data R2DBC
 - Querydsl
 - S3
 - AWS RDBMS
 - MySQL
 - Redis
-- GCP Ubuntu 20.04
+- NCP CentOS 7.8
+- NginX Proxy Manager
 - Docker
 - Jenkins
 
