@@ -1,7 +1,7 @@
 package com.team.puddy.question.application
 
 import com.team.puddy.global.error.ErrorCode
-import com.team.puddy.global.error.exception.NotFoundException
+import com.team.puddy.global.error.UserNotFoundException
 import com.team.puddy.question.domain.QuestionRepository
 import com.team.puddy.question.domain.questionRegister
 import com.team.puddy.user.domain.user
@@ -38,16 +38,18 @@ class QuestionServiceTest : BehaviorSpec({
         }
 
         When("없는 유저일 경우") {
-            every { userRepository.findByIdOrNull(userId) } throws NotFoundException(ErrorCode.USER_NOT_FOUND)
+            every { userRepository.findByIdOrNull(userId) } throws UserNotFoundException(ErrorCode.USER_NOT_FOUND)
 
             Then("Not Found 예외가 발생한다.") {
-                val exception = shouldThrow<NotFoundException> {
+                val exception = shouldThrow<UserNotFoundException> {
                     questionService.registerQuestion(questionRegister, userId)
                 }
                 exception.errorCode shouldBe ErrorCode.USER_NOT_FOUND
             }
         }
     }
+
+
 
 
 })

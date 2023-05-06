@@ -1,9 +1,9 @@
 package com.team.puddy.user.service
 
+import com.team.puddy.global.error.DuplicateRegisterException
 import com.team.puddy.global.error.ErrorCode
-import com.team.puddy.global.error.exception.NotFoundException
-import com.team.puddy.global.error.exception.user.DuplicateRegisterException
-import com.team.puddy.global.error.exception.user.InvalidPasswordException
+import com.team.puddy.global.error.InvalidPasswordException
+import com.team.puddy.global.error.UserNotFoundException
 import com.team.puddy.global.security.jwt.JwtProvider
 import com.team.puddy.user.application.UserService
 import com.team.puddy.user.domain.loginToken
@@ -73,7 +73,7 @@ class UserServiceTest : BehaviorSpec({
         When("아이디로 유저를 찾지 못했을 경우") {
             every { userRepository.findByAccount(userLogin.account) } returns null
             Then("유저를 찾지 못했다는 예외가 발생한다.") {
-                val exception = shouldThrow<NotFoundException> {
+                val exception = shouldThrow<UserNotFoundException> {
                     userService.loginUser(userLogin)
                 }
                 exception.errorCode shouldBe ErrorCode.USER_NOT_FOUND
