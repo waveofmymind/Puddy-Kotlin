@@ -4,8 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
 import com.team.puddy.global.error.ErrorCode
-import com.team.puddy.global.error.exception.BusinessException
-import com.team.puddy.global.error.exception.NotFoundException
+import com.team.puddy.global.error.TokenVerifyException
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
@@ -24,7 +23,7 @@ class JwtVerifier(
                 .build()
                 .verify(token)
         } catch (e: Exception) {
-            throw BusinessException(ErrorCode.TOKEN_VERIFY_FAIL)
+            throw TokenVerifyException(ErrorCode.TOKEN_VERIFY_FAIL)
         }
     }
 
@@ -33,9 +32,9 @@ class JwtVerifier(
 
         findRefreshToken?.let { findToken ->
             if (findToken != refreshToken) {
-                throw NotFoundException(ErrorCode.TOKEN_VERIFY_FAIL)
+                throw TokenVerifyException(ErrorCode.TOKEN_VERIFY_FAIL)
             }
-        } ?: throw NotFoundException(ErrorCode.REFRESH_TOKEN_NOT_FOUND)
+        } ?: throw TokenVerifyException(ErrorCode.REFRESH_TOKEN_NOT_FOUND)
     }
 
     fun expireRefreshToken(account: String) {

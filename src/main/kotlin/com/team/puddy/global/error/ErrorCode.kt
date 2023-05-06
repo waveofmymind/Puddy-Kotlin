@@ -16,6 +16,6 @@ enum class ErrorCode(val httpStatus: HttpStatus, val message: String) {
     //TOKEN
     TOKEN_VERIFY_FAIL(HttpStatus.UNAUTHORIZED, "토큰 검증에 실패하였습니다."),
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, "리프레시 토큰을 찾을 수 없습니다."),
-
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "권한이 없습니다."),
 
 }

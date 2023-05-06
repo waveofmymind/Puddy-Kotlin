@@ -1,11 +1,9 @@
 package com.team.puddy.global.security.jwt
 
-import com.auth0.jwt.exceptions.*
 import com.auth0.jwt.interfaces.DecodedJWT
-import com.auth0.jwt.JWTVerifier
 import com.team.puddy.global.security.auth.AuthConstants
 import com.team.puddy.global.security.auth.JwtUserDetails
-import com.team.puddy.global.error.exception.BusinessException;
+import com.team.puddy.global.error.BusinessException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
@@ -16,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
