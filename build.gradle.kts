@@ -2,13 +2,15 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 
 plugins {
-    id("org.springframework.boot") version "3.0.5"
+    id("org.springframework.boot") version "3.0.6"
     id("io.spring.dependency-management") version "1.1.0"
     id ("org.jetbrains.kotlin.plugin.allopen") version "1.6.21"
-    kotlin("jvm") version "1.8.20"
-    kotlin("plugin.spring") version "1.7.22"
-    kotlin("plugin.jpa") version "1.7.22"
-    kotlin("kapt") version "1.7.10"
+
+    kotlin("jvm") version "1.8.21"
+    kotlin("plugin.spring") version "1.8.21"
+    kotlin("plugin.jpa") version "1.8.21"
+
+    kotlin("kapt") version "1.8.21"
 
 }
 
@@ -61,6 +63,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    testImplementation("io.kotest:kotest-extensions-spring")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:4.6.0")
     testImplementation("io.kotest:kotest-assertions-core:4.6.0")
     testImplementation("io.mockk:mockk:1.11.0")
@@ -75,12 +78,6 @@ dependencies {
     implementation ("com.auth0:java-jwt:3.18.3")
     implementation ("io.jsonwebtoken:jjwt:0.9.1")
     implementation ("com.nimbusds:nimbus-jose-jwt:9.31")
-}
-//JPA 설정
-allOpen {
-    annotation("javax.persistence.Entity")
-    annotation("javax.persistence.MappedSuperclass")
-    annotation("javax.persistence.Embeddable")
 }
 
 tasks.withType<KotlinCompile> {
