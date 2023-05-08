@@ -1,12 +1,11 @@
 package com.team.puddy.user.application
 
 import com.team.puddy.global.error.ErrorCode
-import com.team.puddy.global.error.exception.NotFoundException
-import com.team.puddy.global.error.exception.user.DuplicateRegisterException
-import com.team.puddy.global.error.exception.user.InvalidPasswordException
+import com.team.puddy.global.error.DuplicateRegisterException
+import com.team.puddy.global.error.InvalidPasswordException
+import com.team.puddy.global.error.UserNotFoundException
 import com.team.puddy.global.security.jwt.JwtProvider
 import com.team.puddy.global.security.jwt.LoginToken
-import com.team.puddy.user.domain.UserRole
 import com.team.puddy.user.dto.request.UserLogin
 import com.team.puddy.user.dto.request.UserRegister
 import com.team.puddy.user.dto.request.toEntity
@@ -31,7 +30,7 @@ class UserService(
     }
 
     fun loginUser(userLogin: UserLogin) : LoginToken {
-        val findUser = userRepository.findByAccount(userLogin.account) ?: throw NotFoundException(ErrorCode.USER_NOT_FOUND)
+        val findUser = userRepository.findByAccount(userLogin.account) ?: throw UserNotFoundException(ErrorCode.USER_NOT_FOUND)
         if (!passwordEncoder.matches(userLogin.password,findUser.password)) {
             throw InvalidPasswordException(ErrorCode.INVALID_PASSWORD)
         }
