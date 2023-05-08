@@ -4,23 +4,25 @@ import com.team.puddy.global.error.ErrorCode
 import org.springframework.http.HttpStatus
 
 data class Response<T>(
-    val httpStatus: HttpStatus,
+    val code : Int,
+    val status: HttpStatus,
     val message: String,
     var data: T? = null
 ) {
 
     companion object {
 
-        @JvmStatic fun <T> of(data : T) : Response<T> {
-            return Response(HttpStatus.OK, "성공", data)
+        fun <T> of(httpStatus: HttpStatus, message: String, data: T): Response<T> {
+            return Response(httpStatus.value(), httpStatus, message, data)
         }
 
-        @JvmStatic fun of() : Response<Nothing> {
-            return Response(HttpStatus.OK, "성공", null)
+        fun <T> of(httpStatus: HttpStatus, data: T? = null): Response<T?> {
+            return of(httpStatus, httpStatus.name, data)
         }
 
-        @JvmStatic fun fail(errorCode: ErrorCode): Response<Nothing> {
-            return Response(errorCode.httpStatus, errorCode.message)
+        fun <T> ok(data: T): Response<T?> {
+            return of(HttpStatus.OK, data)
         }
+
     }
 }
