@@ -13,7 +13,23 @@ data class UserRegister(
     val isNotificated: Boolean,
 )
 
-fun UserRegister.toEntity(password:String): User = User(
+data class UserServiceRegister(
+    val account: String,
+    val email: String,
+    val password: String,
+    val username: String,
+    val isNotificated: Boolean,
+)
+
+fun UserRegister.toServiceRegister(): UserServiceRegister = UserServiceRegister(
+    account = account,
+    email = email,
+    password = password,
+    username = username,
+    isNotificated = isNotificated,
+)
+
+fun UserServiceRegister.toEntity(password: String): User = User(
     account = this.account,
     email = this.email,
     password = password,

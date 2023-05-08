@@ -21,6 +21,7 @@ class QuestionService(
         userRepository.findByIdOrNull(userId)?.also { findUser ->
             request.toEntity(findUser).also { question ->
                 questionRepository.save(question)
+
             }
         } ?: throw UserNotFoundException(ErrorCode.USER_NOT_FOUND)
     }

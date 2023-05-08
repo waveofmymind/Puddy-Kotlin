@@ -21,10 +21,10 @@ class UserController(
 
     @PostMapping("/join")
     @ResponseStatus(HttpStatus.CREATED)
-    fun registerUser(@RequestBody userRegister: UserRegister) : Response<Nothing> {
+    fun registerUser(@RequestBody userRegister: UserRegister) : Response<Any?> {
         userService.joinUser(userRegister)
 
-        return Response.of()
+        return Response.ok(HttpStatus.CREATED)
     }
 
     @PostMapping("/login")
@@ -33,6 +33,6 @@ class UserController(
 
         val loginToken  = userService.loginUser(userLogin)
 
-        return Response.of(loginToken)
+        return Response.ok(loginToken)
     }
 }

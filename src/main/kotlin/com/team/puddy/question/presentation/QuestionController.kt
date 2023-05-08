@@ -22,11 +22,11 @@ class QuestionController(
                          @AuthenticationPrincipal user : JwtUserDetails) : Response<Any?>{
         questionService.registerQuestion(request.toServiceRegister(),user.getUserId())
 
-        return Response.of(HttpStatus.CREATED)
+        return Response.of(HttpStatus.CREATED, null)
     }
 
     @GetMapping("/{questionId}")
-    fun getQuestion(@PathVariable("questionId") id : Long): Response<QuestionResponse?> {
+    fun getQuestion(@PathVariable("questionId") id : Long): Response<QuestionResponse> {
 
         val question = questionService.getQuestion(id)
 
