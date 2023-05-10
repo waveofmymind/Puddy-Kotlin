@@ -2,7 +2,6 @@ package com.team.puddy.user.dto.request
 
 import com.team.puddy.user.domain.User
 import com.team.puddy.user.domain.UserRole
-import org.springframework.security.crypto.password.PasswordEncoder
 import kotlin.random.Random
 
 data class UserRegister(
@@ -11,6 +10,11 @@ data class UserRegister(
     val password: String,
     val username: String,
     val isNotificated: Boolean,
+)
+
+data class UserLogin(
+    val account: String,
+    val password: String
 )
 
 data class UserServiceRegister(
