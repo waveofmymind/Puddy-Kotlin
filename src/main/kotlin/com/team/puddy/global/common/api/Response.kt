@@ -23,6 +23,10 @@ data class Response<T>(
        @JvmStatic fun <T> ok(data: T): Response<T> {
             return of(HttpStatus.OK, data)
         }
+        @JvmStatic fun <T> fail(errorCode: ErrorCode): Response<T?> {
+            return of(errorCode.httpStatus, errorCode.message, null)
+        }
+
 
     }
 }

@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException::class)
-    fun businessException(e: BusinessException): ResponseEntity<Response<Nothing>> {
+    fun businessException(e: BusinessException): ResponseEntity<Response<Nothing?>> {
         return ResponseEntity.status(e.errorCode.httpStatus).body(Response.fail(e.errorCode))
     }
 
     @ExceptionHandler(DuplicateRegisterException::class)
-    fun duplicateRegisterException(e: DuplicateRegisterException): ResponseEntity<Response<Nothing>> {
+    fun duplicateRegisterException(e: DuplicateRegisterException): ResponseEntity<Response<Nothing?>> {
         return ResponseEntity.status(e.errorCode.httpStatus).body(Response.fail(e.errorCode))
     }
 
     @ExceptionHandler(UserNotFoundException::class)
-    fun notFoundException(e: UserNotFoundException): ResponseEntity<Response<Nothing>> {
+    fun notFoundException(e: UserNotFoundException): ResponseEntity<Response<Nothing?>> {
         return ResponseEntity.status(e.errorCode.httpStatus).body(Response.fail(e.errorCode))
     }
 
     @ExceptionHandler(InvalidPasswordException::class)
-    fun invalidPasswordException(e: InvalidPasswordException): ResponseEntity<Response<Nothing>> {
+    fun invalidPasswordException(e: InvalidPasswordException): ResponseEntity<Response<Nothing?>> {
         return ResponseEntity.status(e.errorCode.httpStatus).body(Response.fail(e.errorCode))
     }
 }
