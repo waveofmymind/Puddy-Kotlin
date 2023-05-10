@@ -1,4 +1,4 @@
-package com.team.puddy.user.infrastructure
+package com.team.puddy.user.domain
 
 import com.team.puddy.user.domain.User
 import org.springframework.data.jpa.repository.JpaRepository
