@@ -45,6 +45,7 @@ class SecurityConfig(
             .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .authorizeHttpRequests()
             .requestMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
+            .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
             .requestMatchers(HttpMethod.POST, "/users/experts", "/experts/send-docs").hasRole("EXPERT")
             .requestMatchers(HttpMethod.PUT, "/users/experts", "/experts/**").hasRole("EXPERT")
             .requestMatchers(
