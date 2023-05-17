@@ -1,5 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "3.0.6"
@@ -14,16 +14,6 @@ plugins {
 
 }
 
-
-subprojects {
-    apply(plugin = "kotlin-kapt")
-
-    dependencies {
-        implementation("org.mapstruct:mapstruct:1.5.2.Final")
-        kapt("org.mapstruct:mapstruct-processor:1.5.2.Final")
-        kaptTest("org.mapstruct:mapstruct-processor:1.5.2.Final")
-    }
-}
 
 group = "com.team"
 version = "0.0.1-SNAPSHOT"
@@ -42,9 +32,10 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
 
+    //redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -56,14 +47,12 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.5")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.mapstruct:mapstruct:1.5.2.Final")
-    kapt("org.mapstruct:mapstruct-processor:1.5.2.Final")
-    kaptTest("org.mapstruct:mapstruct-processor:1.5.2.Final")
+
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    testImplementation("io.kotest:kotest-extensions-spring")
+//    testImplementation("io.kotest:kotest-extensions-spring")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:4.6.0")
     testImplementation("io.kotest:kotest-assertions-core:4.6.0")
     testImplementation("io.mockk:mockk:1.11.0")
@@ -78,6 +67,11 @@ dependencies {
     implementation ("com.auth0:java-jwt:3.18.3")
     implementation ("io.jsonwebtoken:jjwt:0.9.1")
     implementation ("com.nimbusds:nimbus-jose-jwt:9.31")
+
+    //querydsl
+    implementation("com.querydsl:querydsl-core:5.0.0")
+    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+    annotationProcessor ("com.querydsl:querydsl-apt:5.0.0:jakarta")
 }
 
 tasks.withType<KotlinCompile> {
@@ -90,6 +84,10 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
+
+//sourceSets["main"].withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
+//    kotlin.srcDir("$buildDir/generated/source/kapt/main")
+//}
 
 
 

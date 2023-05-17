@@ -3,9 +3,11 @@ package com.team.puddy.question.application
 import com.team.puddy.global.error.ErrorCode
 import com.team.puddy.global.error.UserNotFoundException
 import com.team.puddy.question.domain.QuestionRepository
+import com.team.puddy.question.domain.mockMultiPartFile
 import com.team.puddy.question.domain.questionRegister
+import com.team.puddy.question.dto.toServiceRegister
 import com.team.puddy.user.domain.user
-import com.team.puddy.user.infrastructure.UserRepository
+import com.team.puddy.user.domain.UserRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -25,12 +27,13 @@ class QuestionServiceTest : BehaviorSpec({
         val userId = 1L
         val questionRegister = questionRegister()
         val user = user()
+        val files = mockMultiPartFile()
 
         every { userRepository.findByIdOrNull(userId) } returns user
         every { questionRepository.save(any()) } returnsArgument 0
 
         When("모든 정보가 있으면") {
-            questionService.registerQuestion(questionRegister, userId)
+            questionService.registerQuestion(questionRegister.toServiceRegister(files), userId)
 
             Then("질문글이 등록된다.") {
                 verify { questionRepository.save(any()) }
@@ -42,7 +45,7 @@ class QuestionServiceTest : BehaviorSpec({
 
             Then("Not Found 예외가 발생한다.") {
                 val exception = shouldThrow<UserNotFoundException> {
-                    questionService.registerQuestion(questionRegister, userId)
+                    questionService.registerQuestion(questionRegister.toServiceRegister(files), userId)
                 }
                 exception.errorCode shouldBe ErrorCode.USER_NOT_FOUND
             }
