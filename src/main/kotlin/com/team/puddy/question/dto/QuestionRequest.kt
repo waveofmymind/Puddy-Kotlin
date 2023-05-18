@@ -1,5 +1,6 @@
 package com.team.puddy.question.dto
 
+import com.team.puddy.image.domain.Image
 import com.team.puddy.question.domain.Category
 import com.team.puddy.question.domain.Question
 import com.team.puddy.user.domain.User
@@ -17,7 +18,7 @@ data class QuestionServiceRegister(
     val content: String,
     val postCategory: Int,
     val category: String,
-    val images: List<MultipartFile>,
+    val images: List<MultipartFile>?,
 )
 
 fun QuestionRegister.toServiceRegister(images : List<MultipartFile>) = QuestionServiceRegister(
@@ -28,12 +29,13 @@ fun QuestionRegister.toServiceRegister(images : List<MultipartFile>) = QuestionS
     images = images,
 )
 
-fun QuestionServiceRegister.toEntity(user: User) = Question(
+fun QuestionServiceRegister.toEntity(user: User,imageList : List<Image>?) = Question(
     title = title,
     content = content,
     postCategory = postCategory,
     isSolved = false,
     user = user,
+    imageList = imageList?.toMutableList() ?: mutableListOf(),
     category = Category.valueOf(category),
 )
 
@@ -43,4 +45,4 @@ data class QuestionModify(
     val postCategory: Int,
     val category: String,
 )
-//TODO: 이미지 추가
+//TODO: 수정 엔티티 이미지 추가

@@ -2,6 +2,7 @@ package com.team.puddy.question.domain
 
 import com.team.puddy.answer.domain.Answer
 import com.team.puddy.global.config.jpa.BaseEntity
+import com.team.puddy.image.domain.Image
 import com.team.puddy.user.domain.User
 import jakarta.persistence.*
 
@@ -31,9 +32,14 @@ class Question(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    ) : BaseEntity() {
-
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
-    var answerList: MutableList<Answer> = mutableListOf()
+    var answerList: MutableList<Answer> = mutableListOf(),
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "question_id")
+    var imageList: MutableList<Image> = mutableListOf()
+
+) : BaseEntity() {
+
 
 }
