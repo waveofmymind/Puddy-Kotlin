@@ -10,7 +10,8 @@ import com.team.puddy.user.domain.loginToken
 import com.team.puddy.user.domain.user
 import com.team.puddy.user.domain.userLogin
 import com.team.puddy.user.domain.userRegister
-import com.team.puddy.user.infrastructure.UserRepository
+import com.team.puddy.user.domain.UserRepository
+import com.team.puddy.user.dto.request.toServiceRegister
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -34,7 +35,7 @@ class UserServiceTest : BehaviorSpec({
         every { userRepository.save(any()) } returnsArgument 0
 
         When("처음 가입한 아이디일 경우") {
-            userService.joinUser(userRegister)
+            userService.joinUser(userRegister.toServiceRegister())
             Then("회원가입이 된다.") {
                 verify { userRepository.existsByAccount(userRegister.account) }
                 verify { passwordEncoder.encode(userRegister.password) }
@@ -46,7 +47,7 @@ class UserServiceTest : BehaviorSpec({
             every { userRepository.existsByAccount(userRegister.account) } returns true
             Then("이미 중복 가입 예외가 발생한다.") {
                 val exception = shouldThrow<DuplicateRegisterException> {
-                    userService.joinUser(userRegister)
+                    userService.joinUser(userRegister.toServiceRegister())
                 }
                 exception.errorCode shouldBe ErrorCode.DUPLICATE_REGISTER
             }
@@ -62,7 +63,7 @@ class UserServiceTest : BehaviorSpec({
             every { userRepository.findByAccount(userLogin.account) } returns user
             every { passwordEncoder.matches(userLogin.password, user.password) } returns true
             every { jwtProvider.createLoginToken(user) } returns loginToken
-            userService.loginUser(userLogin)
+            userService.loginUser(userLogin.account, userLogin.password)
             Then("토큰을 반환한다.") {
                 verify { userRepository.findByAccount(userLogin.account) }
                 verify { passwordEncoder.matches(userLogin.password, user.password) }
@@ -74,7 +75,7 @@ class UserServiceTest : BehaviorSpec({
             every { userRepository.findByAccount(userLogin.account) } returns null
             Then("유저를 찾지 못했다는 예외가 발생한다.") {
                 val exception = shouldThrow<UserNotFoundException> {
-                    userService.loginUser(userLogin)
+                    userService.loginUser(userLogin.account, userLogin.password)
                 }
                 exception.errorCode shouldBe ErrorCode.USER_NOT_FOUND
             }
@@ -85,7 +86,7 @@ class UserServiceTest : BehaviorSpec({
             every { passwordEncoder.matches(userLogin.password, user.password) } returns false
             Then("비밀번호가 틀렸다는 예외가 발생한다.") {
                 val exception = shouldThrow<InvalidPasswordException> {
-                    userService.loginUser(userLogin)
+                    userService.loginUser(userLogin.account, userLogin.password)
                 }
                 exception.errorCode shouldBe ErrorCode.INVALID_PASSWORD
             }

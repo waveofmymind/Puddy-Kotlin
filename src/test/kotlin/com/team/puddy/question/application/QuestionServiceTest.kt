@@ -2,6 +2,7 @@ package com.team.puddy.question.application
 
 import com.team.puddy.global.error.ErrorCode
 import com.team.puddy.global.error.UserNotFoundException
+import com.team.puddy.image.service.ImageService
 import com.team.puddy.question.domain.QuestionRepository
 import com.team.puddy.question.domain.mockMultiPartFile
 import com.team.puddy.question.domain.questionRegister
@@ -21,7 +22,8 @@ class QuestionServiceTest : BehaviorSpec({
 
     val questionRepository = mockk<QuestionRepository>(relaxed = true)
     val userRepository = mockk<UserRepository>(relaxed = true)
-    val questionService = QuestionService(questionRepository, userRepository)
+    val imageService = mockk<ImageService>(relaxed = true)
+    val questionService = QuestionService(questionRepository, userRepository,imageService)
 
     Given("질문글을 등록할 때") {
         val userId = 1L
@@ -31,6 +33,7 @@ class QuestionServiceTest : BehaviorSpec({
 
         every { userRepository.findByIdOrNull(userId) } returns user
         every { questionRepository.save(any()) } returnsArgument 0
+        every { imageService.uploadImageList(files) } returns mutableListOf()
 
         When("모든 정보가 있으면") {
             questionService.registerQuestion(questionRegister.toServiceRegister(files), userId)

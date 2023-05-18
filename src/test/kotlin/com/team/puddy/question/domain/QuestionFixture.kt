@@ -1,6 +1,6 @@
 package com.team.puddy.question.domain
 
-import com.team.puddy.question.dto.request.QuestionRegister
+import com.team.puddy.question.dto.QuestionRegister
 import com.team.puddy.user.domain.user
 
 fun question() = Question(
