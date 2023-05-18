@@ -32,7 +32,6 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
     //redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
@@ -41,7 +40,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     runtimeOnly("com.mysql:mysql-connector-j")
-    annotationProcessor("org.mapstruct:mapstruct-processor:1.5.2.Final")
+
     testImplementation("org.springframework.security:spring-security-test")
 
     testImplementation("io.mockk:mockk:1.13.5")
@@ -64,9 +63,10 @@ dependencies {
 
     //S3
     implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
+    implementation("javax.xml.bind:jaxb-api:2.3.1")
 
 
-    //token
+    //jwt token
     implementation ("com.auth0:java-jwt:3.18.3")
     implementation ("io.jsonwebtoken:jjwt:0.9.1")
     implementation ("com.nimbusds:nimbus-jose-jwt:9.31")
@@ -88,9 +88,6 @@ tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
-//sourceSets["main"].withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
-//    kotlin.srcDir("$buildDir/generated/source/kapt/main")
-//}
 
 
 
