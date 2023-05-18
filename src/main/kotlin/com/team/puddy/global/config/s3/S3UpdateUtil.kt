@@ -25,21 +25,21 @@ class S3UpdateUtil(
     }
 
     @Throws(IOException::class)
-    fun uploadToS3(file: MultipartFile, fileName: String, folderName: String): String? {
+    fun uploadToS3(file: MultipartFile, fileName: String): String {
         val objectMetaData: ObjectMetadata = createMetaDate(file)
         // S3에 업로드
         amazonS3Client.putObject(
             PutObjectRequest(
                 BUCKET,
-                "$folderName/$fileName", file.inputStream, objectMetaData
+                fileName, file.inputStream, objectMetaData
             )
                 .withCannedAcl(CannedAccessControlList.PublicRead)
         )
-        return amazonS3Client.getUrl(BUCKET, "$folderName/$fileName").toString()
+        return amazonS3Client.getUrl(BUCKET, fileName).toString()
     }
 
-    fun deleteImageFromS3(image: Image, folderName: String) {
-        amazonS3Client.deleteObject(BUCKET, folderName + "/" + image.savedName)
+    fun deleteImageFromS3(image: Image) {
+        amazonS3Client.deleteObject(BUCKET, image.savedName)
     }
 
     fun createMetaDate(file: MultipartFile): ObjectMetadata {
