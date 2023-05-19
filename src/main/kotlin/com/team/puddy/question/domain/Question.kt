@@ -1,10 +1,10 @@
 package com.team.puddy.question.domain
 
+import com.team.puddy.answer.domain.Answer
 import com.team.puddy.global.config.jpa.BaseEntity
+import com.team.puddy.image.domain.Image
 import com.team.puddy.user.domain.User
 import jakarta.persistence.*
-import lombok.AccessLevel
-import lombok.NoArgsConstructor
 
 @Entity
 @Table(name = "question")
@@ -12,24 +12,34 @@ class Question(
 
     var title: String,
     var content: String,
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+
+    var viewCount: Int = 0,
+
+    var isSolved: Boolean = false,
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    val user: User = User(),
-
-    var viewCount : Int = 0,
-
-    var isSolved : Boolean = false,
+    val user: User,
 
     @Enumerated(EnumType.STRING)
-    var category : Category,
+    var category: Category,
 
     @Column(name = "post_category")
     val postCategory: Int,
 
-    ) : BaseEntity() {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null,
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    var answerList: MutableList<Answer> = mutableListOf(),
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "question_id")
+    var imageList: MutableList<Image> = mutableListOf()
+
+) : BaseEntity() {
+
 
 }
