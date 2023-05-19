@@ -31,3 +31,8 @@ data class RefreshTokenNotFoundException(
 data class UnauthorizedException(
     override val errorCode: ErrorCode = ErrorCode.UNAUTHORIZED
 ) : BusinessException(errorCode)
+
+data class EmailSendException(
+    override val errorCode: ErrorCode = ErrorCode.EMAIL_SEND_FAIL
+) : BusinessException(errorCode)
+
