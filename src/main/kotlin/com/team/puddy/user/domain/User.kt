@@ -39,5 +39,9 @@ class User(
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
     var answerList: MutableList<Answer> = mutableListOf()
 
+    fun updateAuth() {
+        this.role = UserRole.EXPERT.role
+    }
+
 }
 
