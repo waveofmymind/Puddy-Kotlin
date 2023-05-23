@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-    id("org.springframework.boot") version "3.0.6"
+    id("org.springframework.boot") version "3.1.0"
     id("io.spring.dependency-management") version "1.1.0"
     id ("org.jetbrains.kotlin.plugin.allopen") version "1.6.21"
 
@@ -28,6 +28,8 @@ configurations {
 repositories {
     mavenCentral()
 }
+
+
 
 
 dependencies {
@@ -70,9 +72,6 @@ dependencies {
     //slack webhook
     implementation("net.gpedro.integrations.slack:slack-webhook:1.4.0")
 
-
-
-
     //jwt token
     implementation ("com.auth0:java-jwt:3.18.3")
     implementation ("io.jsonwebtoken:jjwt:0.9.1")
@@ -89,6 +88,10 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "17"
     }
+}
+
+tasks.withType<Jar> {
+    enabled = false
 }
 
 tasks.withType<Test>().configureEach {
